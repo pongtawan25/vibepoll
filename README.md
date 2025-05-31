@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VibePoll
+
+A simple real-time poll web application built with Next.js, Prisma, and SQLite.
+
+## Features
+- **Admin Panel**
+  - Create, edit, delete polls (with options)
+  - Set one poll as active at a time
+  - Optional countdown timer for polls (3, 5, 10, 30 minutes)
+  - Activate/deactivate polls
+  - See all polls in a table
+- **User Voting**
+  - Vote on the currently active poll
+  - One vote per poll per user (per browser)
+  - See which answer you voted for
+  - Voting disabled when countdown ends
+- **Results**
+  - Real-time results page (auto-refreshes every 2 seconds)
+  - Live countdown timer if poll has a countdown
+  - Progress bars and vote counts for each option
+
+## Tech Stack
+- [Next.js (App Router, TypeScript)](https://nextjs.org/)
+- [Prisma ORM](https://www.prisma.io/)
+- [SQLite](https://www.sqlite.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
 ## Getting Started
 
-First, run the development server:
-
+### 1. Install dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Set up the database
+```bash
+npx prisma migrate dev --name init
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run the development server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Visit:
+- Admin: [http://localhost:3000/admin](http://localhost:3000/admin)
+- Vote: [http://localhost:3000/vote](http://localhost:3000/vote)
+- Results: [http://localhost:3000/results](http://localhost:3000/results)
 
-## Learn More
+## Development Notes
+- Polls can only be edited if not active and have no votes.
+- Only one poll can be active at a time. Activating a poll resets its countdown and clears all previous votes.
+- Countdown is optional. If set, voting is disabled when the timer ends.
+- User voting is tracked per browser using localStorage (not secure for public voting).
+- To reset the database, delete `prisma/dev.db` and run migrations again.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+MIT
